@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunspots & Space Weather | El Observatorio Solar</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <meta name="description" content="Espiral Solar: visualizacion 3D interactiva de la actividad de manchas solares desde 1850 hasta hoy, con datos diarios del World Data Center SILSO.">
+    <meta property="og:title" content="Espiral Solar | Visualizando el latido magnetico del Sol">
+    <meta property="og:description" content="Visualizacion cientifica 3D de los ciclos de manchas solares (1850-presente), inspirada en las espirales climaticas, con datos del WDC-SILSO.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="sunspot_timeserie.png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2240%22%20fill%3D%22%23f59e0b%22/%3E%3C/svg%3E">
+</head>
+<body class="bg-[#0b0f19] text-gray-100 min-h-screen selection:bg-amber-500 selection:text-black">
+
+    <!-- HEADER & LANGUAGE SWITCHER -->
+    <header class="border-b border-gray-800 bg-[#0b0f19]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-600 to-orange-400 flex items-center justify-center shadow-lg shadow-amber-900/50">
+                    <i class="fa-solid fa-sun text-black text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide text-white">Solar Dynamics</h1>
+                    <p class="text-xs text-amber-400 font-mono" data-translate="subtitle">Manchas Solares y Clima Espacial</p>
+                </div>
+            </div>
+            
+            <!-- Language Toggle Button -->
+            <button onclick="toggleLanguage()" class="flex items-center space-x-2 bg-gray-900 hover:bg-gray-800 border border-gray-700 px-4 py-2 rounded-full text-sm font-medium transition-all shadow-inner">
+                <i class="fa-solid fa-globe text-amber-400"></i>
+                <span id="lang-label" class="font-mono uppercase">EN / ES</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 space-y-16">
+
+        <!-- HERO SECTION -->
+        <section class="relative text-center space-y-4 max-w-4xl mx-auto pt-6">
+            <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 flex justify-center overflow-hidden" aria-hidden="true">
+                <div class="h-[420px] w-[420px] rounded-full bg-gradient-to-br from-amber-500/20 to-orange-400/10 blur-3xl"></div>
+            </div>
+            <span class="inline-block bg-amber-500/10 text-amber-400 text-xs font-mono px-3 py-1 rounded-full border border-amber-500/20" data-translate="hero-badge">
+                ASTROFÍSICA Y CLIMA ESPACIAL
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white" data-translate="hero-title">
+                Visualizando el latido magnético del Sol
+            </h2>
+            <p class="text-gray-300 text-base md:text-lg leading-normal font-light" data-translate="hero-desc">
+                Las manchas solares fungen como auténticas ventanas observables hacia la extrema y compleja actividad magnética de nuestra estrella. A través de sus característicos ciclos cuasi-periódicos de 11 años, modulan de forma directa el clima espacial, alterando el entorno interplanetario y constituyendo un factor crítico para la seguridad de la tecnología terrestre, las redes eléctricas globales y los sistemas de posicionamiento satelital.
+            </p>
+            <p class="text-amber-400 text-base md:text-lg leading-normal font-light" data-translate="hero-desc2">
+                Presentamos la <strong>Espiral Solar (Espiral de Schwabe)</strong>, una visualización científica diseñada para mostrar el latido solar a través del tiempo, inspirada en las espirales climáticas popularizadas por el climatólogo Ed Hawkins (Universidad de Reading, Climate Lab Book, 2016). Este modelo tridimensional permite desentrañar la compleja evolución de los ciclos de manchas solares mediante una arquitectura cilíndrica continua que integra datos diarios. Al entrelazar la precisión de los registros heliofísicos con una estética moderna, la visualización facilita la comprensión de la variabilidad magnética y la dinámica a largo plazo de nuestra estrella, ofreciendo una perspectiva tan rigurosa como impactante para la investigación y la divulgación del clima espacial.
+            </p>
+        </section>
+
+        <!-- SECTION 1: ANIMACIONES EMPOTRADAS (VIDEOS MP4) -->
+        <section class="space-y-6">
+            <div class="border-l-4 border-amber-500 pl-4 space-y-1">
+                <h3 class="text-2xl font-bold text-white" data-translate="section-viz-title">Visualizaciones Dinámicas 3D</h3>
+                <p class="text-sm text-gray-400 leading-normal" data-translate="section-viz-subtitle">En las siguientes animaciones podrás apreciar una comparativa de los ciclos solares modelados en espiral temporal, revelando la evolución y acumulación de la actividad magnética a lo largo de las décadas.  "Fuente: WDC-SILSO, Real Observatorio de Bélgica, Bruselas, disponible en el enlace: <a href="https://www.sidc.be/SILSO/datafiles" target="_blank" class="text-amber-400 underline hover:text-amber-300">https://www.sidc.be/SILSO/datafiles</a>, DOI: <a href="https://doi.org/10.24414/qnza-ac80" target="_blank" class="text-amber-400 underline hover:text-amber-300">https://doi.org/10.24414/qnza-ac80</a>".</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Video 1 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm flex flex-col">
+                    <div class="relative bg-black aspect-[9/16] md:aspect-[4/5] flex items-center justify-center overflow-hidden">
+                        <video class="w-full h-full object-contain" autoplay loop muted playsinline preload="metadata" poster="poster_top.jpg">
+                            <source src="sunspot_spiral_top.mp4" type="video/mp4">
+                            Tu navegador no soporta videos HTML5.
+                        </video>
+                    </div>
+                    <div class="p-5 space-y-2">
+                        <h4 class="font-bold text-amber-400 text-lg" data-translate="vid1-title">Espiral Cilíndrica Diaria</h4>
+                        <p class="text-sm text-gray-400" data-translate="vid1-desc">Representación tridimensional continua basada en registros diarios de manchas solares.</p>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm flex flex-col">
+                    <div class="relative bg-black aspect-[9/16] md:aspect-[4/5] flex items-center justify-center overflow-hidden">
+                        <video class="w-full h-full object-contain" autoplay loop muted playsinline preload="metadata" poster="poster_vertical.jpg">
+                            <source src="sunspot_spiral_vertical.mp4" type="video/mp4">
+                            Tu navegador no soporta videos HTML5.
+                        </video>
+                    </div>
+                    <div class="p-5 space-y-2">
+                        <h4 class="font-bold text-amber-400 text-lg" data-translate="vid2-title">Evolución de Ciclos y Rotación</h4>
+                        <p class="text-sm text-gray-400" data-translate="vid2-desc">Vista en rotación continua detallando la acumulación temporal de la actividad solar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: FIGURA ESTÁTICA DE LA SERIE DE TIEMPO (PNG) -->
+        <section class="space-y-6">
+            <div class="border-l-4 border-cyan-500 pl-4 space-y-1">
+                <h3 class="text-2xl font-bold text-white" data-translate="section-ts-title">Serie Histórica (1850 - Presente)</h3>
+                <p class="text-sm text-gray-400 leading-normal" data-translate="section-ts-subtitle">Representación de las manchas solares a través de los años. Muestra un comportamiento semicíclico y marcadamente repetitivo, variando de manera notable en diferentes décadas y ciclos solares según los registros instrumentales modernos.  "Fuente: WDC-SILSO, Real Observatorio de Bélgica, Bruselas, disponible en el enlace: <a href="https://www.sidc.be/SILSO/datafiles" target="_blank" class="text-amber-400 underline hover:text-amber-300">https://www.sidc.be/SILSO/datafiles</a>, DOI: <a href="https://doi.org/10.24414/qnza-ac80" target="_blank" class="text-amber-400 underline hover:text-amber-300">https://doi.org/10.24414/qnza-ac80</a>".</p>
+            </div>
+
+            <div class="bg-gray-900/60 border border-gray-800 rounded-2xl p-4 md:p-6 shadow-2xl backdrop-blur-sm space-y-4">
+                <div class="overflow-x-auto rounded-xl bg-black/45 p-2 flex justify-center">
+                    <img src="sunspot_timeserie.png" alt="Serie de tiempo histórica de manchas solares" class="max-w-full h-auto rounded-lg shadow-md object-contain">
+                </div>
+                <p class="text-sm text-gray-400 text-center italic" data-translate="ts-caption">
+                    Figura analítica de alta resolución adaptada para la visualización de la variabilidad a largo plazo.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-800">
+                    <div class="bg-black/30 border border-gray-800/80 rounded-xl p-5 space-y-2">
+                        <div class="flex items-center space-x-3 text-cyan-400 font-bold">
+                            <i class="fa-solid fa-chart-line text-lg"></i>
+                            <h4 data-translate="stat1-title">Amplitud y Periodicidad de los Ciclos</h4>
+                        </div>
+                        <p class="text-xs text-gray-400 leading-normal" data-translate="stat1-desc">
+                            Los registros desde 1850 confirman una cuasi-periodicidad de 11.2 años en el ciclo de Schwabe. Las amplitudes de los picos varían considerablemente, existiendo ciclos seculares de alta energía (como el Ciclo 19 en 1957-1958) que superan ampliamente la media histórica.
+                        </p>
+                    </div>
+
+                    <div class="bg-black/30 border border-gray-800/80 rounded-xl p-5 space-y-2">
+                        <div class="flex items-center space-x-3 text-amber-400 font-bold">
+                            <i class="fa-solid fa-bolt text-lg"></i>
+                            <h4 data-translate="stat2-title">Intensidad del Campo Magnético Fotosférico</h4>
+                        </div>
+                        <p class="text-xs text-gray-400 leading-normal" data-translate="stat2-desc">
+                            En las umbras de las manchas principales, la intensidad del campo magnético local alcanza de 2,500 a 4,000 gauss, suprimiendo la transferencia de energía convectiva y reduciendo la temperatura radiativa local en más de 1,500 Kelvin.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: ¿QUÉ SON Y POR QUÉ SON IMPORTANTES? -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-gray-900/40 border border-gray-800 rounded-2xl p-6 space-y-4 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-xl font-bold border border-amber-500/20">
+                    <i class="fa-solid fa-circle-dot"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white" data-translate="what-title">¿Qué son las manchas solares?</h3>
+                <p class="text-gray-300 text-sm leading-normal" data-translate="what-desc">
+                    Las manchas solares son regiones localizadas en la fotosfera del Sol que manifiestan una apariencia notablemente oscura en comparación con el tejido brillante circundante. Este oscurecimiento es el resultado directo de temperaturas superficiales significativamente más bajas —aproximadamente 3,500 °C frente a los 5,500 °C habituales del resto de la fotosfera—. Dicho enfriamiento relativo se origina por la presencia de flujos magnéticos monumentales e intensos que emergen desde el interior solar, los cuales bloquean y suprimen eficazmente los penachos de convección térmica ascendente.
+                </p>
+            </div>
+
+            <div class="bg-gray-900/40 border border-gray-800 rounded-2xl p-6 space-y-4 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-xl font-bold border border-cyan-500/20">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white" data-translate="importance-title">Impacto en el Clima Espacial</h3>
+                <p class="text-gray-300 text-sm leading-normal" data-translate="importance-desc">
+                    Más allá de su fascinante morfología visual, la aparición y densidad de grupos complejos de manchas solares actúan como el motor principal del clima espacial dinámico. Durante las fases de máxima actividad, los campos magnéticos retorcidos almacenan y liberan de manera explosiva cantidades colosales de energía en forma de erupciones solares (flares) y eyecciones de masa coronal (CME). Al propagarse por el medio interplanetario e impactar la magnetosfera terrestre, desatan tormentas geomagnéticas capaces de inducir corrientes parásitas en redes eléctricas de alta tensión, degradar o interrumpir señales de navegación satelital (GPS), dañar la circuitería electrónica de los satélites en órbita y poner en riesgo la integridad de las tripulaciones espaciales.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 4: HITOS HISTÓRICOS Y DATOS CURIOSOS (12 BOXES) -->
+        <section class="space-y-6">
+            <div class="border-l-4 border-amber-500 pl-4">
+                <h3 class="text-2xl font-bold text-white" data-translate="cards-section-title">Hitos Históricos y Datos Curiosos</h3>
+                <p class="text-sm text-gray-400" data-translate="cards-section-subtitle">Eventos clave, investigaciones pioneras y registros visuales de misiones espaciales de la NASA.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Tarjeta 1 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black/40 overflow-hidden flex items-center justify-center">
+                        <i class="fa-solid fa-snowflake text-7xl text-amber-500/25"></i>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/20" data-translate="card1-badge">1645 - 1715</span>
+                        <h4 class="text-lg font-bold text-white" data-translate="card1-title">El Mínimo de Maunder</h4>
+                        <p class="text-sm text-gray-400" data-translate="card1-desc">
+                            Un período de 70 años donde las manchas solares prácticamente desaparecieron, coincidiendo con la fase más fría de la "Pequeña Edad de Hielo" en Europa.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black/40 overflow-hidden flex items-center justify-center">
+                        <i class="fa-solid fa-bolt-lightning text-7xl text-amber-500/25"></i>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/20" data-translate="card2-badge">Septiembre de 1859</span>
+                        <h4 class="text-lg font-bold text-white" data-translate="card2-title">El Evento Carrington</h4>
+                        <p class="text-sm text-gray-400" data-translate="card2-desc">
+                            La tormenta geomagnética más intensa registrada en la historia moderna. Provocó fallas en telégrafos globales y auroras boreales visibles en latitudes bajas.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black/40 overflow-hidden flex items-center justify-center">
+                        <i class="fa-solid fa-earth-americas text-7xl text-amber-500/25"></i>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/20" data-translate="card3-badge">Escala Planetaria</span>
+                        <h4 class="text-lg font-bold text-white" data-translate="card3-title">Tamaños Colosales</h4>
+                        <p class="text-sm text-gray-400" data-translate="card3-desc">
+                            Muchas manchas solares individuales son tan vastas que varios planetas Tierra cabrían holgadamente dentro de su núcleo oscuro o umbra.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 4 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black overflow-hidden">
+                        <img src="https://images-assets.nasa.gov/image/0601385/0601385~orig.jpg" alt="Estructura Fibrilar Hinode" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md text-cyan-300 font-mono text-[10px] px-2 py-0.5 rounded border border-cyan-500/30"><a href="https://images.nasa.gov/details/0601385" target="_blank" rel="noopener" class="hover:underline">NASA ID: 0601385</a></span>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <h4 class="text-lg font-bold text-white" data-translate="card4-title">Estructura Fibrilar de Alta Resolución</h4>
+                        <p class="text-sm text-gray-400" data-translate="card4-desc">
+                            Las observaciones ópticas revelan filamentos finos e intricados flujos magnéticos en la penumbra, clave para entender la disipación de energía solar.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 5 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black overflow-hidden">
+                        <img src="https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001980/GSFC_20171208_Archive_e001980~orig.jpg" alt="Lazos Coronales" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md text-cyan-300 font-mono text-[10px] px-2 py-0.5 rounded border border-cyan-500/30"><a href="https://images.nasa.gov/details/GSFC_20171208_Archive_e001980" target="_blank" rel="noopener" class="hover:underline">NASA ID: e001980</a></span>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <h4 class="text-lg font-bold text-white" data-translate="card5-title">Lazos Coronales y Erupciones</h4>
+                        <p class="text-sm text-gray-400" data-translate="card5-desc">
+                            Asociadas a complejos grupos de manchas, las reconexiones magnéticas en la corona exterior proyectan plasma supercaliente al espacio.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 6 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black overflow-hidden">
+                        <img src="https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000923/GSFC_20171208_Archive_e000923~orig.jpg" alt="Migración y Ley de Spörer" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md text-cyan-300 font-mono text-[10px] px-2 py-0.5 rounded border border-cyan-500/30"><a href="https://images.nasa.gov/details/GSFC_20171208_Archive_e000923" target="_blank" rel="noopener" class="hover:underline">NASA ID: e000923</a></span>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <h4 class="text-lg font-bold text-white" data-translate="card6-title">Migración y Ley de Spörer</h4>
+                        <p class="text-sm text-gray-400" data-translate="card6-desc">
+                            Al iniciar un ciclo, las manchas brotan a altas latitudes (30°-45°) y migran gradualmente hacia el ecuador solar a medida que el ciclo madura.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 7 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black overflow-hidden">
+                        <img src="https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000922/GSFC_20171208_Archive_e000922~orig.jpg" alt="Magnetogramas Solares" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md text-cyan-300 font-mono text-[10px] px-2 py-0.5 rounded border border-cyan-500/30"><a href="https://images.nasa.gov/details/GSFC_20171208_Archive_e000922" target="_blank" rel="noopener" class="hover:underline">NASA ID: e000922</a></span>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <h4 class="text-lg font-bold text-white" data-translate="card7-title">Mapeo de Polaridad Magnética</h4>
+                        <p class="text-sm text-gray-400" data-translate="card7-desc">
+                            Los magnetogramas espaciales revelan que las manchas solares actúan típicamente en pares con polaridades magnéticas opuestas en cada hemisferio.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 8 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black overflow-hidden">
+                        <img src="https://images-assets.nasa.gov/image/0301291/0301291~orig.jpg" alt="Inversión Magnética" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md text-amber-300 font-mono text-[10px] px-2 py-0.5 rounded border border-amber-500/30"><a href="https://images.nasa.gov/details/0301291" target="_blank" rel="noopener" class="hover:underline">NASA ID: 0301291</a></span>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <h4 class="text-lg font-bold text-white" data-translate="card8-title">Inversión Magnética Completa</h4>
+                        <p class="text-sm text-gray-400" data-translate="card8-desc">
+                            El campo magnético global del Sol experimenta una inversión polar completa cada 11 años, requiriendo un ciclo de Hale de 22 años para retornar al estado original.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 9 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black overflow-hidden">
+                        <img src="https://images-assets.nasa.gov/image/PIA21949/PIA21949~orig.jpg" alt="Variabilidad Ultravioleta" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md text-amber-300 font-mono text-[10px] px-2 py-0.5 rounded border border-amber-500/30"><a href="https://images.nasa.gov/details/PIA21949" target="_blank" rel="noopener" class="hover:underline">NASA ID: PIA21949</a></span>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <h4 class="text-lg font-bold text-white" data-translate="card9-title">Fluctuación de la Irradiancia</h4>
+                        <p class="text-sm text-gray-400" data-translate="card9-desc">
+                            A pesar de que las manchas oscurecen zonas locales, la emisión ultravioleta total y de rayos X aumenta de forma drástica en máximos solares debido a las fáculas brillantes.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 10 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black overflow-hidden">
+                        <img src="https://images-assets.nasa.gov/image/415205_2/415205_2~orig.jpg" alt="Jeanette Scissum-Mickens" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md text-cyan-300 font-mono text-[10px] px-2 py-0.5 rounded border border-cyan-500/30"><a href="https://images.nasa.gov/details/415205_2" target="_blank" rel="noopener" class="hover:underline">NASA ID: 415205_2</a></span>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <h4 class="text-lg font-bold text-white" data-translate="card10-title">Pionera en Predicción: Jeanette Scissum-Mickens</h4>
+                        <p class="text-sm text-gray-400" data-translate="card10-desc">
+                            Matemática de la NASA que en 1967 publicó un histórico informe con nuevas técnicas de pronóstico para el ciclo de manchas solares, marcando un hito en la ciencia espacial en Marshall.
+                        </p>
+                        <a href="https://ntrs.nasa.gov/citations/19670022005" target="_blank" rel="noopener" class="text-[10px] text-cyan-400 underline hover:text-cyan-300 inline-block mt-1" data-translate="card10-source">Fuente primaria: NASA-TM-X-53593 (NTRS, 1967)</a>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 11 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black overflow-hidden">
+                        <img src="https://images-assets.nasa.gov/image/iss031e089012/iss031e089012~orig.jpg" alt="Tránsito de Venus" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md text-cyan-300 font-mono text-[10px] px-2 py-0.5 rounded border border-cyan-500/30"><a href="https://images.nasa.gov/details/iss031e089012" target="_blank" rel="noopener" class="hover:underline">NASA ID: iss031e089012</a></span>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <h4 class="text-lg font-bold text-white" data-translate="card11-title">Tránsito de Venus y Distancia Astronómica</h4>
+                        <p class="text-sm text-gray-400" data-translate="card11-desc">
+                            Registrado desde la ISS en 2012 y en siglos pasados, este tránsito permitió a los científicos calcular con precisión la distancia entre la Tierra y el Sol, además de analizar la atmósfera venusiana.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 12 -->
+                <div class="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-amber-500/50 transition-all">
+                    <div class="relative h-48 bg-black overflow-hidden">
+                        <img src="https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000921/GSFC_20171208_Archive_e000921~orig.jpg" alt="Erupción de Mancha Gigante" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md text-cyan-300 font-mono text-[10px] px-2 py-0.5 rounded border border-cyan-500/30"><a href="https://images.nasa.gov/details/GSFC_20171208_Archive_e000921" target="_blank" rel="noopener" class="hover:underline">NASA ID: e000921</a></span>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <h4 class="text-lg font-bold text-white" data-translate="card12-title">Erupción Gigante de Rayos X</h4>
+                        <p class="text-sm text-gray-400" data-translate="card12-desc">
+                            Imagen capturada por el SDO que muestra una potente llamarada clase X3.1 desatada desde regiones activas complejas en octubre de 2014.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER AMPLIADO Y PROFESIONAL -->
+    <footer class="border-t border-gray-800 bg-black/60 py-10 mt-20 text-xs text-gray-400 font-mono">
+        <div class="max-w-5xl mx-auto px-4 text-center space-y-3 leading-normal">
+            <p data-translate="footer-text">
+                Desarrollado por David Sierra Porta (2026), para propósitos de investigación, divulgación científica y visualización avanzada del clima espacial. Las visualizaciones interactivas y la serie de tiempo estática han sido desarrolladas completamente por David Sierra Porta. Las demás imágenes usadas en el sitio son productos de la NASA a partir de <a href="https://images.nasa.gov/" target="_blank" class="text-amber-400 underline hover:text-amber-300">images.nasa.gov</a>, de uso libre para propósitos educativos e informativos. Todos los créditos son de la NASA (<a href="https://www.nasa.gov/nasa-brand-center/images-and-media/" target="_blank" class="text-amber-400 underline hover:text-amber-300">NASA Brand Center</a>). David Sierra Porta (<a href="mailto:dporta@utb.edu.co" class="text-amber-400 underline hover:text-amber-300">dporta@utb.edu.co</a>) es Profesor Asociado e Investigador en la Universidad Tecnológica de Bolívar, Cartagena de Indias, Colombia.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT BILINGÜE -->
+    <script>
+        const translations = {
+            es: {
+                "subtitle": "Manchas Solares y Clima Espacial",
+                "hero-badge": "ASTROFÍSICA Y CLIMA ESPACIAL",
+                "hero-title": "Visualizando el latido magnético del Sol",
+                "hero-desc": "Las manchas solares fungen como auténticas ventanas observables hacia la extrema y compleja actividad magnética de nuestra estrella. A través de sus característicos ciclos cuasi-periódicos de 11 años, modulan de forma directa el clima espacial, alterando el entorno interplanetario y constituyendo un factor crítico para la seguridad de la tecnología terrestre, las redes eléctricas globales y los sistemas de posicionamiento satelital.",
+		"hero-desc2": "Presentamos la Espiral Solar (Espiral de Schwabe), una visualización científica diseñada para mostrar el latido solar a través del tiempo, inspirada en las espirales climáticas popularizadas por el climatólogo Ed Hawkins (Universidad de Reading, Climate Lab Book, 2016). Este modelo tridimensional permite desentrañar la compleja evolución de los ciclos de manchas solares mediante una arquitectura cilíndrica continua que integra datos diarios. Al entrelazar la precisión de los registros heliofísicos con una estética moderna, la visualización facilita la comprensión de la variabilidad magnética y la dinámica a largo plazo de nuestra estrella, ofreciendo una perspectiva tan rigurosa como impactante para la investigación y la divulgación del clima espacial.",
+                "section-viz-title": "Visualizaciones Dinámicas 3D",
+                "section-viz-subtitle": "En las siguientes animaciones podrás apreciar una comparativa de los ciclos solares modelados en espiral temporal, revelando la evolución y acumulación de la actividad magnética a lo largo de las décadas.  \"Fuente: WDC-SILSO, Real Observatorio de Bélgica, Bruselas, disponible en el enlace: <a href=\"https://www.sidc.be/SILSO/datafiles\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">https://www.sidc.be/SILSO/datafiles</a>, DOI: <a href=\"https://doi.org/10.24414/qnza-ac80\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">https://doi.org/10.24414/qnza-ac80</a>\".",
+                "vid1-title": "Espiral Cilíndrica Diaria",
+                "vid1-desc": "Representación tridimensional continua basada en registros diarios de manchas solares.",
+                "vid2-title": "Evolución de Ciclos y Rotación",
+                "vid2-desc": "Vista en rotación continua detallando la acumulación temporal de la actividad solar.",
+                "section-ts-title": "Serie Histórica (1850 - Presente)",
+                "section-ts-subtitle": "Representación de las manchas solares a través de los años. Muestra un comportamiento semicíclico y marcadamente repetitivo, variando de manera notable en diferentes décadas y ciclos solares según los registros instrumentales modernos.",
+                "ts-caption": "Figura analítica de alta resolución adaptada para la visualización de la variabilidad a largo plazo.  \"Fuente: WDC-SILSO, Real Observatorio de Bélgica, Bruselas, disponible en el enlace: <a href=\"https://www.sidc.be/SILSO/datafiles\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">https://www.sidc.be/SILSO/datafiles</a>, DOI: <a href=\"https://doi.org/10.24414/qnza-ac80\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">https://doi.org/10.24414/qnza-ac80</a>\".",
+                "stat1-title": "Amplitud y Periodicidad de los Ciclos",
+                "stat1-desc": "Los registros desde 1850 confirman una cuasi-periodicidad de 11.2 años en el ciclo de Schwabe. Las amplitudes de los picos varían considerablemente, existiendo ciclos seculares de alta energía (como el Ciclo 19 en 1957-1958) que superan ampliamente la media histórica.",
+                "stat2-title": "Intensidad del Campo Magnético Fotosférico",
+                "stat2-desc": "En las umbras de las manchas principales, la intensidad del campo magnético local alcanza de 2,500 a 4,000 gauss, suprimiendo la transferencia de energía convectiva y reduciendo la temperatura radiativa local en más de 1,500 Kelvin.",
+                "what-title": "¿Qué son las manchas solares?",
+                "what-desc": "Las manchas solares son regiones localizadas en la fotosfera del Sol que manifiestan una apariencia notablemente oscura en comparación con el tejido brillante circundante. Este oscurecimiento es el resultado directo de temperaturas superficiales significativamente más bajas —aproximadamente 3,500 °C frente a los 5,500 °C habituales del resto de la fotosfera—. Dicho enfriamiento relativo se origina por la presencia de flujos magnéticos monumentales e intensos que emergen desde el interior solar, los cuales bloquean y suprimen eficazmente los penachos de convección térmica ascendente.",
+                "importance-title": "Impacto en el Clima Espacial",
+                "importance-desc": "Más allá de su fascinante morfología visual, la aparición y densidad de grupos complejos de manchas solares actúan como el motor principal del clima espacial dinámico. Durante las fases de máxima actividad, los campos magnéticos retorcidos almacenan y liberan de manera explosiva cantidades colosales de energía en forma de erupciones solares (flares) y eyecciones de masa coronal (CME). Al propagarse por el medio interplanetario e impactar la magnetosfera terrestre, desatan tormentas geomagnéticas capaces de inducir corrientes parásitas en redes eléctricas de alta tensión, degradar o interrumpir señales de navegación satelital (GPS), dañar la circuitería electrónica de los satélites en órbita y poner en riesgo la integridad de las tripulaciones espaciales.",
+                "cards-section-title": "Hitos Históricos y Datos Curiosos",
+                "cards-section-subtitle": "Eventos clave, investigaciones pioneras y registros visuales de misiones espaciales de la NASA.",
+                "card1-badge": "1645 - 1715",
+                "card1-title": "El Mínimo de Maunder",
+                "card1-desc": "Un período de 70 años donde las manchas solares prácticamente desaparecieron, coincidiendo con la fase más fría de la Pequeña Edad de Hielo en Europa.",
+                "card2-badge": "Septiembre de 1859",
+                "card2-title": "El Evento Carrington",
+                "card2-desc": "La tormenta geomagnética más intensa registrada en la historia moderna. Provocó fallas en telégrafos globales y auroras boreales visibles en latitudes bajas.",
+                "card3-badge": "Escala Planetaria",
+                "card3-title": "Tamaños Colosales",
+                "card3-desc": "Muchas manchas solares individuales son tan vastas que varios planetas Tierra cabrían holgadamente dentro de su núcleo oscuro o umbra.",
+                "card4-title": "Estructura Fibrilar de Alta Resolución",
+                "card4-desc": "Las observaciones ópticas revelan filamentos finos e intricados flujos magnéticos en la penumbra, clave para entender la disipación de energía solar.",
+                "card5-title": "Lazos Coronales y Erupciones",
+                "card5-desc": "Asociadas a complejos grupos de manchas, las reconexiones magnéticas en la corona exterior proyectan plasma supercaliente al espacio.",
+                "card6-title": "Migración y Ley de Spörer",
+                "card6-desc": "Al iniciar un ciclo, las manchas brotan a altas latitudes (30°-45°) y migran gradualmente hacia el ecuador solar a medida que el ciclo madura.",
+                "card7-title": "Mapeo de Polaridad Magnética",
+                "card7-desc": "Los magnetogramas espaciales revelan que las manchas solares actúan típicamente en pares con polaridades magnéticas opuestas en cada hemisferio.",
+                "card8-title": "Inversión Magnética Completa",
+                "card8-desc": "El campo magnético global del Sol experimenta una inversión polar completa cada 11 años, requiriendo un ciclo de Hale de 22 años para retornar al estado original.",
+                "card9-title": "Fluctuación de la Irradiancia",
+                "card9-desc": "A pesar de que las manchas oscurecen zonas locales, la emisión ultravioleta total y de rayos X aumenta de forma drástica en máximos solares debido a las fáculas brillantes.",
+                "card10-title": "Pionera en Predicción: Jeanette Scissum-Mickens",
+                "card10-desc": "Matemática de la NASA que en 1967 publicó un histórico informe con nuevas técnicas de pronóstico para el ciclo de manchas solares, marcando un hito en la ciencia espacial en Marshall.",
+                "card10-source": "Fuente primaria: NASA-TM-X-53593 (NTRS, 1967)",
+                "card11-title": "Tránsito de Venus y Distancia Astronómica",
+                "card11-desc": "Registrado desde la ISS en 2012 y en siglos pasados, este tránsito permitió a los científicos calcular con precisión la distancia entre la Tierra y el Sol, además de analizar la atmósfera venusiana.",
+                "card12-title": "Erupción Gigante de Rayos X",
+                "card12-desc": "Imagen capturada por el SDO que muestra una potente llamarada clase X3.1 desatada desde regiones activas complejas en octubre de 2014.",
+                "footer-text": "Desarrollado por David Sierra Porta (2026), para propósitos de investigación, divulgación científica y visualización avanzada del clima espacial. Las visualizaciones interactivas y la serie de tiempo estática han sido desarrolladas completamente por David Sierra Porta. Las demás imágenes usadas en el sitio son productos de la NASA a partir de <a href=\"https://images.nasa.gov/\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">images.nasa.gov</a>, de uso libre para propósitos educativos e informativos. Todos los créditos son de la NASA (<a href=\"https://www.nasa.gov/nasa-brand-center/images-and-media/\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">NASA Brand Center</a>). David Sierra Porta (<a href=\"mailto:dporta@utb.edu.co\" class=\"text-amber-400 underline hover:text-amber-300\">dporta@utb.edu.co</a>) es Profesor Asociado e Investigador en la Universidad Tecnológica de Bolívar, Cartagena de Indias, Colombia."
+            },
+            en: {
+                "subtitle": "Sunspots & Space Weather",
+                "hero-badge": "ASTROPHYSICS & SPACE WEATHER",
+                "hero-title": "Visualizing the Sun's Magnetic Heartbeat",
+                "hero-desc": "Sunspots serve as tangible observational windows into the extreme and complex magnetic activity of our star. Through their characteristic quasi-periodic 11-year cycles, they directly modulate space weather, altering the interplanetary environment and representing a critical factor for the safety of terrestrial technology, global power grids, and satellite positioning systems.",
+		"hero-desc2": "We present the <strong>Solar Spiral (Schwabe Spiral)</strong>, a scientific visualization designed to showcase the solar heartbeat over time, inspired by the climate spirals popularized by climatologist Ed Hawkins (University of Reading, Climate Lab Book, 2016). This three-dimensional model unravels the complex evolution of sunspot cycles through a continuous cylindrical architecture integrating daily data. By intertwining the precision of heliophysical records with a modern aesthetic, the visualization facilitates the understanding of magnetic variability and our star's long-term dynamics, offering a perspective that is as rigorous as it is striking for space weather research and outreach.",
+                "section-viz-title": "Dynamic 3D Visualizations",
+                "section-viz-subtitle": "In the following animations you will appreciate a comparative view of solar cycles modeled in temporal spirals, revealing the evolution and accumulation of magnetic activity across decades. Data Credits: The Sunspot Number data can be freely downloaded as long as proper credit to the WDC-SILSO is explicitely included in any publication using our data (paper article or book, on-line Web content, etc.), e.g.: \"Source: WDC-SILSO, Royal Observatory of Belgium, Brussels, available in: <a href=\"https://www.sidc.be/SILSO/datafiles\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">https://www.sidc.be/SILSO/datafiles</a>, DOI: <a href=\"https://doi.org/10.24414/qnza-ac80\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">https://doi.org/10.24414/qnza-ac80</a>”.",
+                "vid1-title": "Daily Cylindrical Spiral",
+                "vid1-desc": "Continuous 3D representation built from daily sunspot records.",
+                "vid2-title": "Cycle Evolution & Rotation",
+                "vid2-desc": "Continuous rotational view detailing the temporal accumulation of solar activity.",
+                "section-ts-title": "Historical Time Series (1850 - Present)",
+                "section-ts-subtitle": "Representation of sunspots across the years. It displays a semi-cyclic and markedly repetitive behavior, varying notably across different decades and solar cycles according to modern instrumental records. Data Credits: The Sunspot Number data can be freely downloaded as long as proper credit to the WDC-SILSO is explicitely included in any publication using our data (paper article or book, on-line Web content, etc.), e.g.: \"Source: WDC-SILSO, Royal Observatory of Belgium, Brussels, available in: <a href=\"https://www.sidc.be/SILSO/datafiles\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">https://www.sidc.be/SILSO/datafiles</a>, DOI: <a href=\"https://doi.org/10.24414/qnza-ac80\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">https://doi.org/10.24414/qnza-ac80</a>”.",
+                "ts-caption": "High-resolution analytical figure tailored for long-term variability assessment.",
+                "stat1-title": "Cycle Amplitude and Periodicity",
+                "stat1-desc": "Records since 1850 confirm a quasi-periodicity of 11.2 years in the Schwabe cycle. Peak amplitudes vary considerably, with high-energy secular cycles (such as Cycle 19 in 1957-1958) significantly exceeding the historical mean.",
+                "stat2-title": "Photospheric Magnetic Field Strength",
+                "stat2-desc": "Within the umbrae of primary sunspots, local magnetic field intensity reaches 2,500 to 4,000 gauss, suppressing convective energy transfer and lowering local radiative temperature by over 1,500 Kelvin.",
+                "what-title": "What are Sunspots?",
+                "what-desc": "Sunspots are localized regions on the Sun's photosphere that exhibit a markedly dark appearance compared to the surrounding bright background. This darkening is the direct result of significantly lower surface temperatures—approximately 3,500 °C versus the typical 5,500 °C of the rest of the photosphere. This relative cooling is caused by monumental, intense magnetic fluxes emerging from the solar interior, which effectively block and suppress rising thermal convection plumes.",
+                "importance-title": "Space Weather Impact",
+                "importance-desc": "Beyond their fascinating visual morphology, the appearance and density of complex sunspot groups act as the primary engine of dynamic space weather. During phases of maximum activity, twisted magnetic fields store and explosively release colossal amounts of energy in the form of solar flares and coronal mass ejections (CMEs). As they propagate through interplanetary space and impact Earth's magnetosphere, they trigger geomagnetic storms capable of inducing parasitic currents in high-voltage power grids, degrading or interrupting GPS signals, damaging satellite electronics, and posing risks to space crews.",
+                "cards-section-title": "Historical Milestones & Curiosities",
+                "cards-section-subtitle": "Key milestones, pioneering research, and visual archives from NASA space missions.",
+                "card1-badge": "1645 - 1715",
+                "card1-title": "The Maunder Minimum",
+                "card1-desc": "A 70-year period where sunspots nearly vanished, coinciding with the coldest phase of Europe's Little Ice Age.",
+                "card2-badge": "September 1859",
+                "card2-title": "The Carrington Event",
+                "card2-desc": "The most intense geomagnetic storm in modern history. It crashed global telegraph systems and produced auroras visible at unusually low latitudes.",
+                "card3-badge": "Planetary Scale",
+                "card3-title": "Colossal Sizes",
+                "card3-desc": "Many individual sunspots are so vast that multiple Earth planets could easily fit inside their dark cores.",
+                "card4-title": "High-Resolution Fibrillar Structure",
+                "card4-desc": "Optical observations reveal fine filaments and intricate magnetic flows in the penumbra, crucial for understanding solar energy dissipation.",
+                "card5-title": "Coronal Loops and Eruptions",
+                "card5-desc": "Associated with complex sunspot groups, magnetic reconnections in the outer corona project superheated plasma into space.",
+                "card6-title": "Migration and Spörer's Law",
+                "card6-desc": "At cycle onset, sunspots emerge at high latitudes (30°-45°) and gradually migrate toward the solar equator as the cycle matures.",
+                "card7-title": "Magnetic Polarity Mapping",
+                "card7-desc": "Space magnetograms reveal that sunspots typically act in pairs with opposing magnetic polarities across each hemisphere.",
+                "card8-title": "Complete Magnetic Reversal",
+                "card8-desc": "The global magnetic field of the Sun undergoes complete polar reversal every 11 years, requiring a 22-year Hale cycle to return to its original orientation.",
+                "card9-title": "Irradiance Fluctuation",
+                "card9-desc": "Although sunspots darken local patches, total ultraviolet and X-ray emissions increase drastically during solar maximums due to surrounding bright faculae.",
+                "card10-title": "Prediction Pioneer: Jeanette Scissum-Mickens",
+                "card10-desc": "NASA mathematician who published a landmark 1967 report introducing advanced forecasting techniques for the sunspot cycle, marking a space science milestone at Marshall.",
+                "card10-source": "Primary source: NASA-TM-X-53593 (NTRS, 1967)",
+                "card11-title": "Venus Transit and Astronomical Distance",
+                "card11-desc": "Recorded from the ISS in 2012 and past centuries, this transit allowed scientists to accurately calculate the distance between Earth and the Sun while analyzing Venus' atmosphere.",
+                "card12-title": "Giant X-Ray Flare",
+                "card12-desc": "SDO imagery capturing a powerful X3.1 class flare erupting from complex active regions in October 2014.",
+               "footer-text": "Developed by David Sierra Porta (2026), for research, scientific outreach, and advanced space weather visualization purposes. The interactive visualizations and static time series were entirely developed by David Sierra Porta. All other images used on this site are NASA products sourced from <a href=\"https://images.nasa.gov/\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">images.nasa.gov</a>, freely available for educational and informational purposes. All credits belong to NASA (<a href=\"https://www.nasa.gov/nasa-brand-center/images-and-media/\" target=\"_blank\" class=\"text-amber-400 underline hover:text-amber-300\">NASA Brand Center</a>). David Sierra Porta (<a href=\"mailto:dporta@utb.edu.co\" class=\"text-amber-400 underline hover:text-amber-300\">dporta@utb.edu.co</a>) is an Associate Professor and Researcher at Universidad Tecnológica de Bolívar, Cartagena de Indias, Colombia."
+            }
+        };
+
+        let currentLang = 'es';
+        try {
+            const savedLang = localStorage.getItem('lang');
+            if (savedLang === 'es' || savedLang === 'en') currentLang = savedLang;
+        } catch (e) { /* almacenamiento no disponible (ej. navegacion privada) */ }
+
+        function applyTranslations(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    // Usamos innerHTML para preservar los enlaces y estilos HTML internos
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            document.getElementById('lang-label').textContent = lang === 'es' ? 'EN / ES' : 'ES / EN';
+            document.documentElement.setAttribute('lang', lang);
+            try { localStorage.setItem('lang', lang); } catch (e) { /* almacenamiento no disponible */ }
+        }
+
+        function toggleLanguage() {
+            applyTranslations(currentLang === 'es' ? 'en' : 'es');
+        }
+
+        function applyReducedMotion() {
+            let prefersReduced = false;
+            try { prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+            if (!prefersReduced) return;
+            document.querySelectorAll('video[autoplay]').forEach(video => {
+                video.removeAttribute('autoplay');
+                video.loop = false;
+                video.setAttribute('controls', '');
+                video.pause();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // El contenido visible siempre se deriva de `translations`, asi el
+            // texto estatico del HTML (usado por buscadores / lectores sin JS)
+            // y el que ve el usuario despues de cargar nunca quedan desincronizados.
+            applyTranslations(currentLang);
+            applyReducedMotion();
+        });
+    </script>
+</body>
+</html>
