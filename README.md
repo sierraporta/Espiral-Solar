@@ -1,1 +1,6 @@
-# Espiral-Solar
+# Espiral Solar
+
+## Visualizando el latido magnético del Sol
+Las manchas solares fungen como auténticas ventanas observables hacia la extrema y compleja actividad magnética de nuestra estrella. A través de sus característicos ciclos cuasi-periódicos de 11 años, modulan de forma directa el clima espacial, alterando el entorno interplanetario y constituyendo un factor crítico para la seguridad de la tecnología terrestre, las redes eléctricas globales y los sistemas de posicionamiento satelital.
+
+Presentamos la Espiral Solar (Espiral de Schwabe), una visualización científica diseñada para mostrar el latido solar a través del tiempo, inspirada en las espirales climáticas popularizadas por el climatólogo Ed Hawkins (Universidad de Reading, Climate Lab Book, 2016). Este modelo tridimensional permite desentrañar la compleja evolución de los ciclos de manchas solares mediante una arquitectura cilíndrica continua que integra datos diarios. Al entrelazar la precisión de los registros heliofísicos con una estética moderna, la visualización facilita la comprensión de la variabilidad magnética y la dinámica a largo plazo de nuestra estrella, ofreciendo una perspectiva tan rigurosa como impactante para la investigación y la divulgación del clima espacial.
